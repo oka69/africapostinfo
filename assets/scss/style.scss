@@ -1,0 +1,50 @@
+#top-bar {
+    #flash-infos {
+        max-width: 100%;
+        width: 1000px;
+    }
+
+    button {
+        font-size: .6em;
+        font-weight: bold;
+    }
+
+    .input-group {
+        width: 40%;
+
+        .input-group-text {
+            background-color: transparent !important;
+        }
+
+        input {
+            border-left: none;
+        }
+    }
+}
+
+header {
+    #banner {
+        img:first-child {
+            width: 25%;
+        }
+
+        img:nth-child(2) {
+            width: 65%;
+        }
+
+        img:last-child {
+            width: 10%;
+        }
+    }
+}
+
+#header-img {
+    img {
+        width: 100%;
+    }
+}
+
+footer {
+    background-color: #062b46;
+    color: white;  
+}

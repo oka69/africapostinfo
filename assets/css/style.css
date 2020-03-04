@@ -1,0 +1,38 @@
+#top-bar #flash-infos {
+  max-width: 100%;
+  width: 1000px;
+}
+#top-bar button {
+  font-size: 0.6em;
+  font-weight: bold;
+}
+#top-bar .input-group {
+  width: 40%;
+}
+#top-bar .input-group .input-group-text {
+  background-color: transparent !important;
+}
+#top-bar .input-group input {
+  border-left: none;
+}
+
+header #banner img:first-child {
+  width: 25%;
+}
+header #banner img:nth-child(2) {
+  width: 65%;
+}
+header #banner img:last-child {
+  width: 10%;
+}
+
+#header-img img {
+  width: 100%;
+}
+
+footer {
+  background-color: #062b46;
+  color: white;
+}
+
+/*# sourceMappingURL=style.css.map */
