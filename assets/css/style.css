@@ -6,9 +6,6 @@
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
 }
-#top-bar .input-group {
-  width: 40%;
-}
 #top-bar .input-group .input-group-text {
   background-color: transparent !important;
 }
@@ -33,6 +30,23 @@ header #banner img:last-child {
 footer {
   background-color: #062b46;
   color: white;
+}
+
+.mapdiv {
+  /* margin-top: 30px;
+  margin-left: 20px; */
+}
+.mapdiv svg {
+  border: 1px solid;
+}
+.mapdiv svg path {
+  fill: #9d2322;
+  stroke: #062b46;
+  stroke-width: 1px;
+  transition: fill 0.3s;
+}
+.mapdiv :hover {
+  fill: #062b46;
 }
 
 /*# sourceMappingURL=style.css.map */
