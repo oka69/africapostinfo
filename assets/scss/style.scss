@@ -1,12 +1,14 @@
 #top-bar {
     #flash-infos {
-        max-width: 100%;
-        width: 1000px;
-    }
+        div {
+            max-width: 100%;
+            width: 1000px;
+        }
 
-    button {
-        font-size: .6em;
-        font-weight: bold;
+        span {
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+        }
     }
 
     .input-group {
@@ -33,7 +35,7 @@ header {
         }
 
         img:last-child {
-            width: 10%;
+            width: 70%;
         }
     }
 }
