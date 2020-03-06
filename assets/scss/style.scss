@@ -1,10 +1,5 @@
 #top-bar {
     #flash-infos {
-        div {
-            max-width: 100%;
-            width: 1000px;
-        }
-
         span {
             border-bottom-right-radius: 0;
             border-top-right-radius: 0;
@@ -24,16 +19,8 @@
 
 header {
     #banner {
-        img:first-child {
-            width: 25%;
-        }
-
         img:nth-child(2) {
             width: 65%;
-        }
-
-        img:last-child {
-            width: 70%;
         }
     }
 }
