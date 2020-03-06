@@ -23,6 +23,34 @@ header {
             width: 65%;
         }
     }
+
+    nav {
+        button {
+            border-color: #062b46 !important;
+
+            li {
+                color: #062b46;
+            }
+        }
+
+        a {
+            font-weight: bold;
+            color: #062b46;
+
+            &:hover {
+                background-color: #062b46;
+                color: white;
+            }
+        }
+        
+        .active {
+            background-color: #062b46;
+            
+            a {
+                color: white;
+            }
+        }
+    }
 }
 
 #header-img {

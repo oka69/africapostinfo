@@ -12,6 +12,26 @@
 header #banner img:nth-child(2) {
   width: 65%;
 }
+header nav button {
+  border-color: #062b46 !important;
+}
+header nav button li {
+  color: #062b46;
+}
+header nav a {
+  font-weight: bold;
+  color: #062b46;
+}
+header nav a:hover {
+  background-color: #062b46;
+  color: white;
+}
+header nav .active {
+  background-color: #062b46;
+}
+header nav .active a {
+  color: white;
+}
 
 #header-img img {
   width: 100%;
