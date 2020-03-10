@@ -1,6 +1,7 @@
-#top-bar #flash-infos span {
+#top-bar #flash-infos > span {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
+  background-color: #9d2322;
 }
 #top-bar .input-group .input-group-text {
   background-color: transparent !important;
@@ -53,6 +54,19 @@ footer {
 }
 .mapdiv :hover {
   fill: #062b46;
+}
+
+.btn-link {
+  background-color: #062b46;
+  color: white;
+}
+.btn-link:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.fa-plus {
+  color: #9d2322;
 }
 
 /*# sourceMappingURL=style.css.map */

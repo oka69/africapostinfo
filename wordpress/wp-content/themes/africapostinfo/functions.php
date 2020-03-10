@@ -16,7 +16,7 @@ function rest_featured_image( $data, $post, $context ) {
 }
 
 function custom_excerpt_length( $length ) {
-    return 50;
+    return 30;
 }
 
 add_action( 'after_setup_theme', 'theme_setup' );

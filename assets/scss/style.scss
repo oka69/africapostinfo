@@ -1,8 +1,9 @@
 #top-bar {
     #flash-infos {
-        span {
+        & > span {
             border-bottom-right-radius: 0;
             border-top-right-radius: 0;
+            background-color: #9d2322;
         }
     }
 
@@ -79,4 +80,18 @@ footer {
     :hover {
         fill: #062b46;
     }
+}
+
+.btn-link {
+    background-color: #062b46;
+    color: white;
+
+    &:hover {
+        text-decoration: none;
+        color: white;
+    }
+}
+
+.fa-plus {
+    color: #9d2322;
 }
