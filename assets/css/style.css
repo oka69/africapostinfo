@@ -43,9 +43,6 @@ footer {
   color: white;
 }
 
-.mapdiv svg {
-  border: 1px solid;
-}
 .mapdiv svg path {
   fill: #9d2322;
   stroke: #062b46;

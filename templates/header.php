@@ -57,7 +57,7 @@
                     </div>
                     
                     <div class="col-2 text-center">
-                        <a href="carte.html">
+                        <a href="carte.php">
                             <img src="assets/img/carte_afrique.png" 
                                 class="img-fluid p-3" alt="Pays d'Afrique" title="Carte d'Afrique">
                         </a>

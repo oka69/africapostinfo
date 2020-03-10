@@ -1,6 +1,6 @@
 $(function() {
     //connexion au REST API de WordPress avec la librairie javascript node-wpapi
-    var wp = new WPAPI({ endpoint: 'http://localhost/africapostinfo/wordpress/wp-json' });
+    var wp = new WPAPI({ endpoint: 'https://kypersmarket.com/wordpress/wp-json' });
 
     //récupération du dernier article mis en avant (sticky post)
     if ( document.getElementById( "sticky-post" ) ) {
@@ -8,8 +8,15 @@ $(function() {
             .then(function( data ) {
                 let html = `
                     <h4>A la une</h4>
-                    <h1 class="my-3">${ data[0].title.rendered }</h1>
-                    <img src="${ data[0].featured_image_url }" class="img-fluid" alt="">
+
+                    <h1 class="my-3">
+                        <a href="article.php?id=${ data[0].id }">${ data[0].title.rendered }</a>
+                    </h1>
+
+                    <a href="article.php?id=${ data[0].id }">
+                        <img src="${ data[0].featured_image_url }" class="img-fluid" alt="">
+                    </a>
+
                     <p>${ data[0].excerpt.rendered }</p>
 
                     <a href="article.php?id=${ data[0].id }" class="btn btn-link my-2">
@@ -34,11 +41,13 @@ $(function() {
                     html += `
                         <div class="row no-gutters mt-2">
                             <div class="col-lg-4 col-md-2 col-4 pr-2">
-                                <img src="${ element.featured_image_url }" class="img-fluid" alt="">
+                                <a href="article.php?id=${ data[0].id }">
+                                    <img src="${ element.featured_image_url }" class="img-fluid" alt="">
+                                </a>
                             </div>
                             
                             <div class="col-lg-8 col-md-10 col-8">
-                                <a href="article.php?id=${ element.id }">${ element.title.rendered }</a>
+                                <a href="article.php?id=${ data[0].id }">${ element.title.rendered }</a>
                             </div>
                         </div>
                     `;
@@ -75,7 +84,9 @@ $(function() {
                     html += `
                         <div class="row no-gutters mt-3">
                             <div class="col-lg-6 col-md-3 col-4 pr-2">
-                                <img src="${ element.featured_image_url }" class="img-fluid" alt="">
+                                <a href="article.php?id=${ element.id }">
+                                    <img src="${ element.featured_image_url }" class="img-fluid" alt="">
+                                </a>
                             </div>
 
                             <div class="col-lg-6 col-md-9 col-8">
@@ -114,7 +125,9 @@ $(function() {
                     html += `
                         <div class="row no-gutters mt-3">
                             <div class="col-lg-6 col-md-3 col-4 pr-2">
-                                <img src="${ element.featured_image_url }" class="img-fluid" alt="">
+                                <a href="article.php?id=${ element.id }">
+                                    <img src="${ element.featured_image_url }" class="img-fluid" alt="">
+                                </a>
                             </div>
 
                             <div class="col-lg-6 col-md-9 col-8">
@@ -150,8 +163,10 @@ $(function() {
                 let html = `
                     <h4>Culture</h4>
 
-                    <img src="${ data[0].featured_image_url }" class="img-fluid my-3" alt="">
-                    <h3>${ data[0].title.rendered }</h3>
+                    <a href="article.php?id=${ data[0].id }">
+                        <img src="${ data[0].featured_image_url }" class="img-fluid my-3" alt="">
+                        <h3>${ data[0].title.rendered }</h3>
+                    </a>
                 
                     <div class="d-flex align-items-center justify-content-between my-2">
                         <a href="article.php?id=${ data[0].id }" class="btn btn-link">Lire la suite</a>
@@ -182,8 +197,10 @@ $(function() {
                 let html = `
                     <h4>Sport</h4>
 
-                    <img src="${ data[0].featured_image_url }" class="img-fluid my-3" alt="">
-                    <h3>${ data[0].title.rendered }</h3>
+                    <a href="article.php?id=${ data[0].id }">
+                        <img src="${ data[0].featured_image_url }" class="img-fluid my-3" alt="">
+                        <h3>${ data[0].title.rendered }</h3>
+                    </a>
                 
                     <div class="d-flex align-items-center justify-content-between my-2">
                         <a href="article.php?id=${ data[0].id }" class="btn btn-link">Lire la suite</a>
@@ -214,8 +231,10 @@ $(function() {
                 let html = `
                     <h4>Technologie</h4>
 
-                    <img src="${ data[0].featured_image_url }" class="img-fluid my-3" alt="">
-                    <h3>${ data[0].title.rendered }</h3>
+                    <a href="article.php?id=${ data[0].id }">
+                        <img src="${ data[0].featured_image_url }" class="img-fluid my-3" alt="">
+                        <h3>${ data[0].title.rendered }</h3>
+                    </a>
                 
                     <div class="d-flex align-items-center justify-content-between my-2">
                         <a href="article.php?id=${ data[0].id }" class="btn btn-link">Lire la suite</a>
@@ -246,8 +265,10 @@ $(function() {
                 let html = `
                     <h4>Monde</h4>
 
-                    <img src="${ data[0].featured_image_url }" class="img-fluid my-3" alt="">
-                    <h3>${ data[0].title.rendered }</h3>
+                    <a href="article.php?id=${ data[0].id }">
+                        <img src="${ data[0].featured_image_url }" class="img-fluid my-3" alt="">
+                        <h3>${ data[0].title.rendered }</h3>
+                    </a>
                 
                     <div class="d-flex align-items-center justify-content-between my-2">
                         <a href="article.php?id=${ data[0].id }" class="btn btn-link">Lire la suite</a>
@@ -303,11 +324,14 @@ $(function() {
                     data.forEach(element => {
                         html += `
                             <div class="p-3 mb-5 border border-dark rounded">
-                                <h1 class="my-3">${ element.title.rendered }</h1>
-                                <img src="${ element.featured_image_url }" class="img-fluid my-3" alt="">
+                                <a href="article.php?id=${ element.id }">
+                                    <h1 class="my-3">${ element.title.rendered }</h1>
+                                    <img src="${ element.featured_image_url }" class="img-fluid my-3" alt="">
+                                </a>
+
                                 <p>${ element.excerpt.rendered }</p>
     
-                                <a href="article.php?id=${ element.id }"" class="btn btn-link my-2">
+                                <a href="article.php?id=${ element.id }" class="btn btn-link my-2">
                                     Lire la suite
                                 </a>
                             </div>
@@ -393,11 +417,14 @@ $(function() {
                     data.forEach(element => {
                         html += `
                             <div class="p-3 mb-5 border border-dark rounded">
-                                <h1 class="my-3">${ element.title.rendered }</h1>
-                                <img src="${ element.featured_image_url }" class="img-fluid my-3" alt="">
+                                <a href="article.php?id=${ element.id }">
+                                    <h1 class="my-3">${ element.title.rendered }</h1>
+                                    <img src="${ element.featured_image_url }" class="img-fluid my-3" alt="">
+                                </a>
+                                
                                 <p>${ element.excerpt.rendered }</p>
     
-                                <a href="article.php?id=${ element.id }"" class="btn btn-link my-2">
+                                <a href="article.php?id=${ element.id }" class="btn btn-link my-2">
                                     Lire la suite
                                 </a>
                             </div>
