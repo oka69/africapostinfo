@@ -1,4 +1,5 @@
 $(function() {
+    //gestion des articles
     //connexion au REST API de WordPress avec la librairie javascript node-wpapi
     var wp = new WPAPI({ endpoint: 'https://kypersmarket.com/wordpress/wp-json' });
 
@@ -483,6 +484,180 @@ $(function() {
                     `;
     
                     $("#posts-list").html( html );
+                })
+                .catch(function( err ) {
+                    console.log( err );
+                });
+        }
+    }
+
+    //gestion de la gallérie image
+    //récupération des dernières images
+    if ( document.getElementById( "images-list" ) ) {
+        wp.posts().perPage( 5 ).sticky( true ).order( 'desc' ).orderby( 'id' ).get()
+            .then(function( data ) {
+                let html = '';
+    
+                data.forEach(element => {
+                    html += `
+                        <div class="col">
+                            <a href="gallerie.php?id=${ element.categories[0] }">
+                                <img src="${ element.featured_image_url }" class="img-fluid" alt="">
+                                <h5 class="mt-2">${ element.title.rendered }</h5>
+                            </a>
+                        </div>
+                    `;
+                });
+
+                $("#images-list").html( html );
+            })
+            .catch(function( err ) {
+                console.log( err );
+            });
+    }
+        
+    //récupération des images par catégorie
+    if ( document.getElementById( "_images-list" ) ) {
+        if ( catId === "toute" ) {
+            var totalPages = 0;
+
+            //récupération du nombre total de pages par articles
+            wp.posts().perPage( 10 ).page( pageId ).order( 'desc' ).orderby( 'id' ).headers()
+                .then(function( data ) {
+                    totalPages = data["x-wp-totalpages"];
+                });
+            
+            wp.posts().perPage( 10 ).page( pageId ).order( 'desc' ).orderby( 'id' ).get()
+                .then(function( data ) {
+                    let html = '';
+        
+                    data.forEach(element => {
+                        html += `
+                            <div class="col p-3">
+                                <img src="${ element.featured_image_url }" class="img-fluid" alt="">
+                                <h5 class="mt-2">${ element.title.rendered }</h5>
+                            </div>
+                        `;
+                    });
+
+                    $("#_images-list").html( html );
+
+                    //barre de pagination
+                    html = '';
+
+                    //bouton page précédente 
+                    if ( pageId > 1 ) {
+                        html += `
+                            <li class="page-item">    
+                                <a class="page-link" href="gallerie.php?id=${ catId }&page=${ pageId - 1 }">Page précédente</a>
+                            </li>
+                        `;
+                    }
+
+                    //bouton numérotés
+                    if ( totalPages > 1 ) {
+                        for (let i = 1; i <= totalPages; i++) {
+                            if (i === pageId) {
+                                html += `
+                                    <li class="page-item active">    
+                                        <a class="page-link" href="gallerie.php?id=${ catId }&page=${ i }">
+                                        ${ i }
+                                        <span class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+                                `;
+                            } else {
+                                html += `
+                                    <li class="page-item">    
+                                        <a class="page-link" href="gallerie.php?id=${ catId }&page=${ i }">${ i }</a>
+                                    </li>
+                                `;
+                            }
+                        }
+                    }
+
+                    //bouton page suivante
+                    if ( pageId < totalPages ) {
+                        html += `
+                            <li class="page-item">    
+                                <a class="page-link" href="gallerie.php?id=${ catId }&page=${ pageId + 1 }">Page suivante</a>
+                            </li>
+                        `;
+                    }
+
+                    $(".pagination").html( html );
+                })
+                .catch(function( err ) {
+                    console.log( err );
+                });
+        } else {
+            catId = Number(catId);
+
+            //récupération du nombre total de pages par articles
+            wp.posts().categories( catId ).perPage( 10 ).page( pageId ).order( 'desc' ).orderby( 'id' ).headers()
+                .then(function( data ) {
+                    totalPages = data["x-wp-totalpages"];
+                });
+            
+            wp.posts().categories( catId ).perPage( 10 ).page( pageId ).order( 'desc' ).orderby( 'id' ).get()
+                .then(function( data ) {
+                    let html = '';
+        
+                    data.forEach(element => {
+                        html += `
+                            <div class="col p-3">
+                                <img src="${ element.featured_image_url }" class="img-fluid" alt="">
+                                <h5 class="mt-2">${ element.title.rendered }</h5>
+                            </div>
+                        `;
+                    });
+
+                    $("#_images-list").html( html );
+
+                    //barre de pagination
+                    html = '';
+
+                    //bouton page précédente 
+                    if ( pageId > 1 ) {
+                        html += `
+                            <li class="page-item">    
+                                <a class="page-link" href="gallerie.php?id=${ catId }&page=${ pageId - 1 }">Page précédente</a>
+                            </li>
+                        `;
+                    }
+
+                    //bouton numérotés
+                    if ( totalPages > 1 ) {
+                        for (let i = 1; i <= totalPages; i++) {
+                            if (i === pageId) {
+                                html += `
+                                    <li class="page-item active">    
+                                        <a class="page-link" href="gallerie.php?id=${ catId }&page=${ i }">
+                                        ${ i }
+                                        <span class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+                                `;
+                            } else {
+                                html += `
+                                    <li class="page-item">    
+                                        <a class="page-link" href="gallerie.php?id=${ catId }&page=${ i }">${ i }</a>
+                                    </li>
+                                `;
+                            }
+                        }
+                    }
+
+                    //bouton page suivante
+                    if ( pageId < totalPages ) {
+                        html += `
+                            <li class="page-item">    
+                                <a class="page-link" href="gallerie.php?id=${ catId }&page=${ pageId + 1 }">Page suivante</a>
+                            </li>
+                        `;
+                    }
+
+                    $(".pagination").html( html );
                 })
                 .catch(function( err ) {
                     console.log( err );

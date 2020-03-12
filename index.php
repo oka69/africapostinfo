@@ -106,29 +106,14 @@ include_once "templates/header.php";
     <section class="container mt-5">
         <div class="p-3 border border-dark rounded">
             <h4 class="mb-3">Images à la une</h4>
-
-            <div class="row row-cols-1 row-cols-lg-5 row-cols-md-3">
-                <div class="col">
-                    <img src="https://via.placeholder.com/250" class="img-fluid" alt="">
-                </div>
-                <div class="col mt-3 mt-lg-0 mt-md-0">
-                    <img src="https://via.placeholder.com/250" class="img-fluid" alt="">
-                </div>
-                <div class="col mt-3 mt-lg-0 mt-md-0">
-                    <img src="https://via.placeholder.com/250" class="img-fluid" alt="">
-                </div>
-                <div class="col mt-3 mt-lg-0">
-                    <img src="https://via.placeholder.com/250" class="img-fluid" alt="">
-                </div>
-                <div class="col mt-3 mt-lg-0">
-                    <img src="https://via.placeholder.com/250" class="img-fluid" alt="">
-                </div>
-            </div>
+            
+            <!-- liste des images à la une -->
+            <div id="images-list" class="row row-cols-1 row-cols-lg-5 row-cols-md-3"></div>
 
             <div class="d-flex align-items-center mt-3">
                 <button class="btn d-flex align-items-center">
                     <i class="fa fa-plus fa-2x"></i>
-                    <a href="#" class="ml-2">d'images</a>
+                    <a href="gallerie.php?id=toute" class="ml-2">d'images</a>
                 </button>
             </div>
         </div>
