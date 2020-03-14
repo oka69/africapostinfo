@@ -309,38 +309,13 @@ $(function() {
 
     if ( document.getElementById( "posts-list" ) ) {
         if ( catId === "plus_recents" ) {
-            //récupération des articles récents
-            var totalPages = 0;
-
             //récupération du nombre total de pages par articles
             wp.posts().perPage( 5 ).page( pageId ).order( 'desc' ).orderby( 'id' ).headers()
                 .then(function( data ) {
-                    totalPages = data["x-wp-totalpages"];
-                });
-            
-            wp.posts().perPage( 5 ).page( pageId ).order( 'desc' ).orderby( 'id' ).get()
-                .then(function( data ) {
-                    let html = '';
-
-                    data.forEach(element => {
-                        html += `
-                            <div class="p-3 mb-5 border border-dark rounded">
-                                <a href="article.php?id=${ element.id }">
-                                    <h1 class="my-3">${ element.title.rendered }</h1>
-                                    <img src="${ element.featured_image_url }" class="img-fluid my-3" alt="">
-                                </a>
-
-                                <p>${ element.excerpt.rendered }</p>
-    
-                                <a href="article.php?id=${ element.id }" class="btn btn-link my-2">
-                                    Lire la suite
-                                </a>
-                            </div>
-                        `;
-                    });
+                    let totalPages = data["x-wp-totalpages"];
 
                     //barre de pagination
-                    html += `
+                    let html = `
                         <nav class="mt-5">
                             <ul class="pagination">
                     `;
@@ -389,142 +364,237 @@ $(function() {
                             </ul>
                         </nav>
                     `;
-    
-                    $("#posts-list").html( html );
+
+                    return html;
+                })
+                .then(function( pagination ) {
+                    wp.posts().perPage( 5 ).page( pageId ).order( 'desc' ).orderby( 'id' ).get()
+                        .then(function( data ) {
+                            let html = '';
+
+                            data.forEach(element => {
+                                html += `
+                                    <div class="p-3 mb-5 border border-dark rounded">
+                                        <a href="article.php?id=${ element.id }">
+                                            <h1 class="my-3">${ element.title.rendered }</h1>
+                                            <img src="${ element.featured_image_url }" class="img-fluid my-3" alt="">
+                                        </a>
+
+                                        <p>${ element.excerpt.rendered }</p>
+            
+                                        <a href="article.php?id=${ element.id }" class="btn btn-link my-2">
+                                            Lire la suite
+                                        </a>
+                                    </div>
+                                `;
+                            });
+
+                            html += pagination;
+
+                            $("#posts-list").html( html );
+                    })
                 })
                 .catch(function( err ) {
                     console.log( err );
                 });
         } else {
             //récupération des articles par rubrique
-            var totalPages = 0;
+            wp.categories().slug( catId ).then(function ( data ) {
+                wp.posts().categories( data[0].id ).perPage( 5 ).page( pageId ).order( 'desc' ).orderby( 'id' ).headers()
+                    .then(function( pages ) {
+                        let totalPages = pages["x-wp-totalpages"];
 
-            //récupération du nombre total de pages par articles de la rubrique
-            wp.categories().slug( catId )
-                .then(function ( data ) {
-                    wp.posts().categories( data[0].id ).perPage( 5 ).page( pageId ).order( 'desc' ).orderby( 'id' ).headers()
-                        .then(function( data ) {
-                            totalPages = data["x-wp-totalpages"];
-                        });
-            });
+                        //barre de pagination
+                        let html = `
+                            <nav class="mt-5">
+                                <ul class="pagination">
+                        `;
+
+                        //bouton page précédente 
+                        if ( pageId > 1 ) {
+                            html += `
+                                <li class="page-item">    
+                                    <a class="page-link" href="rubrique.php?id=${ catId }&page=${ pageId - 1 }">Page précédente</a>
+                                </li>
+                            `;
+                        }
             
-            wp.categories().slug( catId )
-                .then(function ( data ) {
-                    return wp.posts().categories( data[0].id ).perPage( 5 ).page( pageId ).order( 'desc' ).orderby( 'id' );
-                })
-                .then(function( data ) {
-                    let html = '';
-    
-                    data.forEach(element => {
-                        html += `
-                            <div class="p-3 mb-5 border border-dark rounded">
-                                <a href="article.php?id=${ element.id }">
-                                    <h1 class="my-3">${ element.title.rendered }</h1>
-                                    <img src="${ element.featured_image_url }" class="img-fluid my-3" alt="">
-                                </a>
-                                
-                                <p>${ element.excerpt.rendered }</p>
-    
-                                <a href="article.php?id=${ element.id }" class="btn btn-link my-2">
-                                    Lire la suite
-                                </a>
-                            </div>
-                        `;
-                    });
-    
-                    //barre de pagination
-                    html += `
-                        <nav class="mt-5">
-                            <ul class="pagination">
-                    `;
-
-                    //bouton page précédente 
-                    if ( pageId > 1 ) {
-                        html += `
-                            <li class="page-item">    
-                                <a class="page-link" href="rubrique.php?id=${ catId }&page=${ pageId - 1 }">Page précédente</a>
-                            </li>
-                        `;
-                    }
-        
-                    //bouton numérotés
-                    if ( totalPages > 1 ) {
-                        for (let i = 1; i <= totalPages; i++) {
-                            if (i === pageId) {
-                                html += `
-                                    <li class="page-item active">    
-                                        <a class="page-link" href="rubrique.php?id=${ catId }&page=${ i }">
-                                        ${ i }
-                                        <span class="sr-only">(current)</span>
-                                        </a>
-                                    </li>
-                                 `;
-                            } else {
-                                html += `
-                                    <li class="page-item">    
-                                        <a class="page-link" href="rubrique.php?id=${ catId }&page=${ i }">${ i }</a>
-                                    </li>
-                                 `;
+                        //bouton numérotés
+                        if ( totalPages > 1 ) {
+                            for (let i = 1; i <= totalPages; i++) {
+                                if (i === pageId) {
+                                    html += `
+                                        <li class="page-item active">    
+                                            <a class="page-link" href="rubrique.php?id=${ catId }&page=${ i }">
+                                            ${ i }
+                                            <span class="sr-only">(current)</span>
+                                            </a>
+                                        </li>
+                                    `;
+                                } else {
+                                    html += `
+                                        <li class="page-item">    
+                                            <a class="page-link" href="rubrique.php?id=${ catId }&page=${ i }">${ i }</a>
+                                        </li>
+                                    `;
+                                }
                             }
                         }
-                    }
-        
-                    //bouton page suivante
-                    if ( pageId < totalPages ) {
+            
+                        //bouton page suivante
+                        if ( pageId < totalPages ) {
+                            html += `
+                                <li class="page-item">    
+                                    <a class="page-link" href="rubrique.php?id=${ catId }&page=${ pageId + 1 }">Page suivante</a>
+                                </li>
+                            `;
+                        }
+
                         html += `
-                            <li class="page-item">    
-                                <a class="page-link" href="rubrique.php?id=${ catId }&page=${ pageId + 1 }">Page suivante</a>
-                            </li>
+                                </ul>
+                            </nav>
                         `;
-                    }
-    
-                    html += `
-                            </ul>
-                        </nav>
-                    `;
-    
-                    $("#posts-list").html( html );
-                })
-                .catch(function( err ) {
-                    console.log( err );
-                });
+
+                        return html;
+                    })
+                    .then(function( pagination ) {
+                        wp.categories().slug( catId )
+                            .then(function ( data ) {
+                                return wp.posts().categories( data[0].id ).perPage( 5 ).page( pageId ).order( 'desc' ).orderby( 'id' );
+                            })
+                            .then(function( data ) {
+                                let html = '';
+                
+                                data.forEach(element => {
+                                    html += `
+                                        <div class="p-3 mb-5 border border-dark rounded">
+                                            <a href="article.php?id=${ element.id }">
+                                                <h1 class="my-3">${ element.title.rendered }</h1>
+                                                <img src="${ element.featured_image_url }" class="img-fluid my-3" alt="">
+                                            </a>
+                                            
+                                            <p>${ element.excerpt.rendered }</p>
+                
+                                            <a href="article.php?id=${ element.id }" class="btn btn-link my-2">
+                                                Lire la suite
+                                            </a>
+                                        </div>
+                                    `;
+                                });
+                
+                                html += pagination;
+
+                                $("#posts-list").html( html );
+                            })
+                        })
+                        .catch(function( err ) {
+                            console.log( err );
+                        });
+            })
         }
     }
 
     //gestion de la gallérie image
     //récupération des dernières images
     if ( document.getElementById( "images-list" ) ) {
-        wp.posts().perPage( 5 ).sticky( true ).order( 'desc' ).orderby( 'id' ).get()
-            .then(function( data ) {
-                let html = '';
-    
-                data.forEach(element => {
-                    html += `
-                        <div class="col">
-                            <a href="gallerie.php?id=${ element.categories[0] }">
-                                <img src="${ element.featured_image_url }" class="img-fluid" alt="">
-                                <h5 class="mt-2">${ element.title.rendered }</h5>
-                            </a>
-                        </div>
-                    `;
-                });
+        $.post("/africapostinfo/gallery/collections/5", function( data ) {
+            let html = '';
+            let collections = data.collections;
+            let thumbnails = data.thumbnails;
 
-                $("#images-list").html( html );
-            })
-            .catch(function( err ) {
-                console.log( err );
+            collections.forEach((element, index) => {
+                html += `
+                    <div class="col">
+                        <a href="gallerie.php?id=${ element.id }">
+                            <img src="${ thumbnails[index].image }" class="img-fluid" alt="">
+                            <h5 class="mt-2">${ element.name }</h5>
+                        </a>
+                    </div>
+                `;
             });
+
+            $("#images-list").html( html );
+        });
     }
         
     //récupération des images par catégorie
     if ( document.getElementById( "_images-list" ) ) {
         if ( catId === "toute" ) {
-            var totalPages = 0;
-
             //récupération du nombre total de pages par articles
-            wp.posts().perPage( 10 ).page( pageId ).order( 'desc' ).orderby( 'id' ).headers()
+            $.post("/africapostinfo/gallery/collections", function( data ) {
+                let html = `
+                    <h2 class="py-3">Galerie d'images</h2>
+
+                    <div class="row row-cols-1 row-cols-lg-2 row-cols-md-2">
+                `;
+
+                let collections = data.collections;
+                let thumbnails = data.thumbnails;
+    
+                collections.forEach((element, index) => {
+                    html += `
+                        <div class="col">
+                            <a href="gallerie.php?id=${ element.id }">
+                                <img src="${ thumbnails[index].image }" class="img-fluid" alt="">
+                                <h5 class="mt-2">${ element.name }</h5>
+                            </a>
+                        </div>
+                    `;
+                });
+
+                html += '</div>';
+    
+                $("#_images-list").html( html );
+            });
+
+            /* wp.posts().perPage( 10 ).page( pageId ).order( 'desc' ).orderby( 'id' ).headers()
                 .then(function( data ) {
-                    totalPages = data["x-wp-totalpages"];
+                    let totalPages = data["x-wp-totalpages"];
+
+                    //barre de pagination
+                    let html = '';
+
+                    //bouton page précédente 
+                    if ( pageId > 1 ) {
+                        html += `
+                            <li class="page-item">    
+                                <a class="page-link" href="gallerie.php?id=${ catId }&page=${ pageId - 1 }">Page précédente</a>
+                            </li>
+                        `;
+                    }
+
+                    //bouton numérotés
+                    if ( totalPages > 1 ) {
+                        for (let i = 1; i <= totalPages; i++) {
+                            if (i === pageId) {
+                                html += `
+                                    <li class="page-item active">    
+                                        <a class="page-link" href="gallerie.php?id=${ catId }&page=${ i }">
+                                        ${ i }
+                                        <span class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+                                `;
+                            } else {
+                                html += `
+                                    <li class="page-item">    
+                                        <a class="page-link" href="gallerie.php?id=${ catId }&page=${ i }">${ i }</a>
+                                    </li>
+                                `;
+                            }
+                        }
+                    }
+
+                    //bouton page suivante
+                    if ( pageId < totalPages ) {
+                        html += `
+                            <li class="page-item">    
+                                <a class="page-link" href="gallerie.php?id=${ catId }&page=${ pageId + 1 }">Page suivante</a>
+                            </li>
+                        `;
+                    }
+
+                    $(".pagination").html( html );
                 });
             
             wp.posts().perPage( 10 ).page( pageId ).order( 'desc' ).orderby( 'id' ).get()
@@ -541,9 +611,41 @@ $(function() {
                     });
 
                     $("#_images-list").html( html );
+                })
+                .catch(function( err ) {
+                    console.log( err );
+                }); */
+        } else {
+            catId = Number(catId);
+
+            $.post("/africapostinfo/gallery/collections/images/" + catId, function( data ) {
+                let html = `
+                    <h2 class="py-3">${ data.name }</h2>
+                    
+                    <div class="row row-cols-1 row-cols-lg-2 row-cols-md-2">
+                `;
+
+                let thumbnails = data.thumbnails;
+    
+                thumbnails.forEach(element => {
+                    html += `
+                        <div class="col p-3">
+                            <img src="${ element.image }" class="img-fluid" alt="">
+                        </div>
+                    `;
+                });
+
+                html += '</div>';
+    
+                $("#_images-list").html( html );
+            });
+
+            /* wp.posts().categories( catId ).perPage( 10 ).page( pageId ).order( 'desc' ).orderby( 'id' ).headers()
+                .then(function( data ) {
+                    let totalPages = data["x-wp-totalpages"];
 
                     //barre de pagination
-                    html = '';
+                    let html = '';
 
                     //bouton page précédente 
                     if ( pageId > 1 ) {
@@ -586,17 +688,6 @@ $(function() {
                     }
 
                     $(".pagination").html( html );
-                })
-                .catch(function( err ) {
-                    console.log( err );
-                });
-        } else {
-            catId = Number(catId);
-
-            //récupération du nombre total de pages par articles
-            wp.posts().categories( catId ).perPage( 10 ).page( pageId ).order( 'desc' ).orderby( 'id' ).headers()
-                .then(function( data ) {
-                    totalPages = data["x-wp-totalpages"];
                 });
             
             wp.posts().categories( catId ).perPage( 10 ).page( pageId ).order( 'desc' ).orderby( 'id' ).get()
@@ -613,55 +704,10 @@ $(function() {
                     });
 
                     $("#_images-list").html( html );
-
-                    //barre de pagination
-                    html = '';
-
-                    //bouton page précédente 
-                    if ( pageId > 1 ) {
-                        html += `
-                            <li class="page-item">    
-                                <a class="page-link" href="gallerie.php?id=${ catId }&page=${ pageId - 1 }">Page précédente</a>
-                            </li>
-                        `;
-                    }
-
-                    //bouton numérotés
-                    if ( totalPages > 1 ) {
-                        for (let i = 1; i <= totalPages; i++) {
-                            if (i === pageId) {
-                                html += `
-                                    <li class="page-item active">    
-                                        <a class="page-link" href="gallerie.php?id=${ catId }&page=${ i }">
-                                        ${ i }
-                                        <span class="sr-only">(current)</span>
-                                        </a>
-                                    </li>
-                                `;
-                            } else {
-                                html += `
-                                    <li class="page-item">    
-                                        <a class="page-link" href="gallerie.php?id=${ catId }&page=${ i }">${ i }</a>
-                                    </li>
-                                `;
-                            }
-                        }
-                    }
-
-                    //bouton page suivante
-                    if ( pageId < totalPages ) {
-                        html += `
-                            <li class="page-item">    
-                                <a class="page-link" href="gallerie.php?id=${ catId }&page=${ pageId + 1 }">Page suivante</a>
-                            </li>
-                        `;
-                    }
-
-                    $(".pagination").html( html );
                 })
                 .catch(function( err ) {
                     console.log( err );
-                });
+                }); */
         }
     }
 });

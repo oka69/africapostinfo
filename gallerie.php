@@ -23,7 +23,7 @@ if ( isset( $_GET['id'] ) && !empty( $_GET['id'] ) ) {
             <div class="col-lg-8 col-12">
                 <div class="p-3 mb-5 border border-dark rounded">
                     <!-- liste des images de la catégorie -->
-                    <div id="_images-list" class="row row-cols-1 row-cols-lg-2 row-cols-md-2"></div>
+                    <div id="_images-list"></div>
                 </div>
                 
                 <nav class="mt-5">
