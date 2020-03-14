@@ -71,6 +71,18 @@ if ( isset( $_GET['id'] ) && !empty( $_GET['id'] ) ) {
         </div>
     </section>
 
+    <div id="lightbox">
+        <div class="container">
+            <div id="lightbox-header p-2">
+                <li class="fa fa-times fa-3x text-white" title="Fermer" style="cursor: pointer"></li>
+            </div>
+            
+            <div class="text-center">
+                <img id="lightbox-image">
+            </div>
+        </div>
+    </div>
+
 <?php
     //insertion du template footer
     include_once "templates/footer.php";

@@ -66,4 +66,21 @@ footer {
   color: #9d2322;
 }
 
+.lightbox {
+  cursor: pointer;
+}
+
+#lightbox {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding-top: 100px;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -13,7 +13,7 @@ $(function() {
                 cache: false,
                 processData: false,
                 success: function() {
-                    window.location.href = "/africapostinfo/gallery/dashboard";
+                    window.location.href = "/gallery/dashboard";
                 }
             });
         });
@@ -24,7 +24,7 @@ $(function() {
 
             if (window.confirm("Etes-vous sûr de vouloir supprimer cette collection?")) {
                 $.post( "dashboard/remove_collection/" + collectionId, function() {
-                    window.location.href = "/africapostinfo/gallery/dashboard";
+                    window.location.href = "/gallery/dashboard";
                 });
             }
         });
@@ -51,7 +51,7 @@ $(function() {
                     cache: false,
                     processData: false,
                     success: function() {
-                        window.location.href = "/africapostinfo/gallery/dashboard";
+                        window.location.href = "/gallery/dashboard";
                     }
                 });
             }

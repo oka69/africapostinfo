@@ -1,7 +1,19 @@
+//afficher le lightbox
+function lightbox(e) {
+    var lightbox = document.getElementById("lightbox");
+    var lightboxImage = document.getElementById("lightbox-image");
+
+    lightboxImage.setAttribute("src", e.dataset.imgPath);
+    lightbox.setAttribute("style", "display: block;");
+
+    /* $( "#lightbox-image" ).attr( "src", e.dataset.imgPath );
+    $( "#lightbox" ).css( "display", "block" ); */
+}
+
 $(function() {
     //gestion des articles
     //connexion au REST API de WordPress avec la librairie javascript node-wpapi
-    var wp = new WPAPI({ endpoint: 'https://kypersmarket.com/wordpress/wp-json' });
+    var wp = new WPAPI({ endpoint: 'https://africapost.info/bd/wp-json' });
 
     //récupération du dernier article mis en avant (sticky post)
     if ( document.getElementById( "sticky-post" ) ) {
@@ -497,7 +509,7 @@ $(function() {
     //gestion de la gallérie image
     //récupération des dernières images
     if ( document.getElementById( "images-list" ) ) {
-        $.post("/africapostinfo/gallery/collections/5", function( data ) {
+        $.post("/gallery/collections/5", function( data ) {
             let html = '';
             let collections = data.collections;
             let thumbnails = data.thumbnails;
@@ -521,7 +533,7 @@ $(function() {
     if ( document.getElementById( "_images-list" ) ) {
         if ( catId === "toute" ) {
             //récupération du nombre total de pages par articles
-            $.post("/africapostinfo/gallery/collections", function( data ) {
+            $.post("/gallery/collections", function( data ) {
                 let html = `
                     <h2 class="py-3">Galerie d'images</h2>
 
@@ -618,7 +630,7 @@ $(function() {
         } else {
             catId = Number(catId);
 
-            $.post("/africapostinfo/gallery/collections/images/" + catId, function( data ) {
+            $.post("/gallery/collections/images/" + catId, function( data ) {
                 let html = `
                     <h2 class="py-3">${ data.name }</h2>
                     
@@ -630,7 +642,7 @@ $(function() {
                 thumbnails.forEach(element => {
                     html += `
                         <div class="col p-3">
-                            <img src="${ element.image }" class="img-fluid" alt="">
+                            <img src="${ element.image }" class="img-fluid lightbox" data-img-path="${ element.image }" onclick="lightbox(this)" alt="">
                         </div>
                     `;
                 });
@@ -710,4 +722,9 @@ $(function() {
                 }); */
         }
     }
+
+    //cacher le lightbox
+    $( "#lightbox" ).find( "li" ).click( function() {
+        $( "#lightbox"  ).css( "display", "none" );
+    });
 });
