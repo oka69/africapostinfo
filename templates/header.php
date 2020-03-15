@@ -39,7 +39,7 @@
                         <input type="search" class="form-control" id="search" placeholder="Rechercher">
                     </div>
 
-                    <i class="fa fa-user fa-2x pl-3"></i>
+                    <li class="fa fa-user fa-2x pl-3"></li>
                 </div>
             </div>
         </div>
@@ -79,28 +79,28 @@
                     <div class="collapse navbar-collapse" id="navbar">
                         <ul class="navbar-nav">
                             <li class="nav-item active text-uppercase">
-                                <a class="nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="/">Accueil <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item text-uppercase">
-                                <a class="nav-link" href="#">Politique</a>
+                                <a class="nav-link" href="rubrique.php?id=politique">Politique</a>
                             </li>
                             <li class="nav-item text-uppercase">
-                                <a class="nav-link" href="#">Afrique</a>
+                                <a class="nav-link" href="rubrique.php?id=afrique">Afrique</a>
                             </li>
                             <li class="nav-item text-uppercase">
-                                <a class="nav-link" href="#">Monde</a>
+                                <a class="nav-link" href="rubrique.php?id=monde">Monde</a>
                             </li>
                             <li class="nav-item text-uppercase">
-                                <a class="nav-link" href="#">Business</a>
+                                <a class="nav-link" href="rubrique.php?id=business">Business</a>
                             </li>
                             <li class="nav-item text-uppercase">
-                                <a class="nav-link" href="#">Sport</a>
+                                <a class="nav-link" href="rubrique.php?id=sport">Sport</a>
                             </li>
                             <li class="nav-item text-uppercase">
-                                <a class="nav-link" href="#">Culture</a>
+                                <a class="nav-link" href="rubrique.php?id=culture">Culture</a>
                             </li>
                             <li class="nav-item text-uppercase">
-                                <a class="nav-link" href="#">Technologie</a>
+                                <a class="nav-link" href="rubrique.php?id=technologie">Technologie</a>
                             </li>
                             <li class="nav-item text-uppercase">
                                 <a class="nav-link" href="#">AfriqueTV</a>

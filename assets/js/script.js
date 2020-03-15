@@ -1,13 +1,12 @@
 //afficher le lightbox
-function lightbox(e) {
-    var lightbox = document.getElementById("lightbox");
-    var lightboxImage = document.getElementById("lightbox-image");
-
+function showLightbox(e) {
+    //attribution de l'image
+    let lightboxImage = document.getElementById("lightbox-image");
     lightboxImage.setAttribute("src", e.dataset.imgPath);
-    lightbox.setAttribute("style", "display: block;");
 
-    /* $( "#lightbox-image" ).attr( "src", e.dataset.imgPath );
-    $( "#lightbox" ).css( "display", "block" ); */
+    //affichage du lightbox
+    let lightbox = document.getElementById("lightbox");
+    lightbox.setAttribute("style", "display: block;");
 }
 
 $(function() {
@@ -54,13 +53,13 @@ $(function() {
                     html += `
                         <div class="row no-gutters mt-2">
                             <div class="col-lg-4 col-md-2 col-4 pr-2">
-                                <a href="article.php?id=${ data[0].id }">
+                                <a href="article.php?id=${ element.id }">
                                     <img src="${ element.featured_image_url }" class="img-fluid" alt="">
                                 </a>
                             </div>
                             
                             <div class="col-lg-8 col-md-10 col-8">
-                                <a href="article.php?id=${ data[0].id }">${ element.title.rendered }</a>
+                                <a href="article.php?id=${ element.id }">${ element.title.rendered }</a>
                             </div>
                         </div>
                     `;
@@ -255,7 +254,7 @@ $(function() {
                         <div class="d-flex align-items-center">
                             <button class="btn d-flex align-items-center">
                                 <i class="fa fa-plus fa-2x"></i>
-                                <a href="rubrique.php?id=tech" class="ml-2">d'articles</a>
+                                <a href="rubrique.php?id=technologie" class="ml-2">d'articles</a>
                             </button>
                         </div>
                     </div>
@@ -506,7 +505,7 @@ $(function() {
         }
     }
 
-    //gestion de la gallérie image
+    //gestion de la galerie image
     //récupération des dernières images
     if ( document.getElementById( "images-list" ) ) {
         $.post("/gallery/collections/5", function( data ) {
@@ -517,7 +516,7 @@ $(function() {
             collections.forEach((element, index) => {
                 html += `
                     <div class="col">
-                        <a href="gallerie.php?id=${ element.id }">
+                        <a href="galerie.php?id=${ element.id }">
                             <img src="${ thumbnails[index].image }" class="img-fluid" alt="">
                             <h5 class="mt-2">${ element.name }</h5>
                         </a>
@@ -546,7 +545,7 @@ $(function() {
                 collections.forEach((element, index) => {
                     html += `
                         <div class="col">
-                            <a href="gallerie.php?id=${ element.id }">
+                            <a href="galerie.php?id=${ element.id }">
                                 <img src="${ thumbnails[index].image }" class="img-fluid" alt="">
                                 <h5 class="mt-2">${ element.name }</h5>
                             </a>
@@ -570,7 +569,7 @@ $(function() {
                     if ( pageId > 1 ) {
                         html += `
                             <li class="page-item">    
-                                <a class="page-link" href="gallerie.php?id=${ catId }&page=${ pageId - 1 }">Page précédente</a>
+                                <a class="page-link" href="galerie.php?id=${ catId }&page=${ pageId - 1 }">Page précédente</a>
                             </li>
                         `;
                     }
@@ -581,7 +580,7 @@ $(function() {
                             if (i === pageId) {
                                 html += `
                                     <li class="page-item active">    
-                                        <a class="page-link" href="gallerie.php?id=${ catId }&page=${ i }">
+                                        <a class="page-link" href="galerie.php?id=${ catId }&page=${ i }">
                                         ${ i }
                                         <span class="sr-only">(current)</span>
                                         </a>
@@ -590,7 +589,7 @@ $(function() {
                             } else {
                                 html += `
                                     <li class="page-item">    
-                                        <a class="page-link" href="gallerie.php?id=${ catId }&page=${ i }">${ i }</a>
+                                        <a class="page-link" href="galerie.php?id=${ catId }&page=${ i }">${ i }</a>
                                     </li>
                                 `;
                             }
@@ -601,7 +600,7 @@ $(function() {
                     if ( pageId < totalPages ) {
                         html += `
                             <li class="page-item">    
-                                <a class="page-link" href="gallerie.php?id=${ catId }&page=${ pageId + 1 }">Page suivante</a>
+                                <a class="page-link" href="galerie.php?id=${ catId }&page=${ pageId + 1 }">Page suivante</a>
                             </li>
                         `;
                     }
@@ -642,7 +641,11 @@ $(function() {
                 thumbnails.forEach(element => {
                     html += `
                         <div class="col p-3">
-                            <img src="${ element.image }" class="img-fluid lightbox" data-img-path="${ element.image }" onclick="lightbox(this)" alt="">
+                            <img 
+                                src="${ element.image }" 
+                                class="img-fluid lightbox" 
+                                data-img-path="${ element.image }" 
+                                onclick="showLightbox(this)" alt="">
                         </div>
                     `;
                 });
@@ -663,7 +666,7 @@ $(function() {
                     if ( pageId > 1 ) {
                         html += `
                             <li class="page-item">    
-                                <a class="page-link" href="gallerie.php?id=${ catId }&page=${ pageId - 1 }">Page précédente</a>
+                                <a class="page-link" href="galerie.php?id=${ catId }&page=${ pageId - 1 }">Page précédente</a>
                             </li>
                         `;
                     }
@@ -674,7 +677,7 @@ $(function() {
                             if (i === pageId) {
                                 html += `
                                     <li class="page-item active">    
-                                        <a class="page-link" href="gallerie.php?id=${ catId }&page=${ i }">
+                                        <a class="page-link" href="galerie.php?id=${ catId }&page=${ i }">
                                         ${ i }
                                         <span class="sr-only">(current)</span>
                                         </a>
@@ -683,7 +686,7 @@ $(function() {
                             } else {
                                 html += `
                                     <li class="page-item">    
-                                        <a class="page-link" href="gallerie.php?id=${ catId }&page=${ i }">${ i }</a>
+                                        <a class="page-link" href="galerie.php?id=${ catId }&page=${ i }">${ i }</a>
                                     </li>
                                 `;
                             }
@@ -694,7 +697,7 @@ $(function() {
                     if ( pageId < totalPages ) {
                         html += `
                             <li class="page-item">    
-                                <a class="page-link" href="gallerie.php?id=${ catId }&page=${ pageId + 1 }">Page suivante</a>
+                                <a class="page-link" href="galerie.php?id=${ catId }&page=${ pageId + 1 }">Page suivante</a>
                             </li>
                         `;
                     }

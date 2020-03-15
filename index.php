@@ -113,7 +113,7 @@ include_once "templates/header.php";
             <div class="d-flex align-items-center mt-3">
                 <button class="btn d-flex align-items-center">
                     <i class="fa fa-plus fa-2x"></i>
-                    <a href="gallerie.php?id=toute" class="ml-2">d'images</a>
+                    <a href="galerie.php?id=toute" class="ml-2">d'images</a>
                 </button>
             </div>
         </div>
