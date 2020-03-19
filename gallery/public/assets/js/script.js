@@ -1,5 +1,4 @@
 $(function() {
-    //gestion de la gallérie d'images
     //ajout et suppression des collections
     if ( document.getElementById( "add-collection-form" ) ) {
         $( "#add-collection-form" ).submit(function(e) {
@@ -20,6 +19,7 @@ $(function() {
 
         $(".remove-collection").click(function(e) {
             e.preventDefault();
+
             let collectionId = $(this).data( "collectionId" );
 
             if (window.confirm("Etes-vous sûr de vouloir supprimer cette collection?")) {
@@ -35,10 +35,10 @@ $(function() {
         $( "#add-images-form" ).submit(function(e) {
             e.preventDefault();
 
-            let collectionList = document.getElementById("collection-list");
-            let optionList = collectionList.options;
-            let selectedIndex = collectionList.selectedIndex;
-            let collectionId = optionList[selectedIndex].dataset.collectionId;
+            let collections = document.getElementById("collection-list");
+            let options = collections.options;
+            let i = collections.selectedIndex;
+            let collectionId = options[i].dataset.collectionId;
 
             if ( collectionId === undefined ) {
                 alert("Veuillez sélectionner une collection");

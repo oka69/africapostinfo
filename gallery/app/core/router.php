@@ -46,12 +46,7 @@ class Router {
         }
 
         if (!file_exists("app/controllers/" . $this->controller . ".php")) {
-            require_once "app/controllers/error.php";
-
-            $this->controller = new ErrorController();
-            $this->controller->error_404();
-
-            exit();
+            header("Location: ../");
         }
 
         require_once "app/controllers/" . $this->controller . ".php";

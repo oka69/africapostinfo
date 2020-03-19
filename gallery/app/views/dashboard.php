@@ -31,15 +31,17 @@
                     <td><?= $collection['name'] ?></td>
 
                     <td>
-                        <?php
-                        
-                        $images = explode(",", $collection['images']);
-                        
-                        foreach( $images as $image ) { ?>
 
-                            <img src="<?= $image ?>" class="img-fluid mb-2" width="150" alt="">
+                    <?php
+                    $images = explode(",", $collection['images']);
                         
-                        <?php } ?>
+                    foreach( $images as $image ) { 
+                    ?>
+
+                        <img src="<?= $image ?>" class="img-fluid mb-2" width="150" alt="">
+                        
+                    <?php } ?>
+
                     </td>
 
                     <td><a class="remove-collection" data-collection-id="<?= $collection['id'] ?>" href="#">Supprimer la collection</a></td>
@@ -48,22 +50,6 @@
                 <?php } ?>
             </tbody>
         </table>
-
-        <!-- <nav class="mt-5 mx-auto">
-            <ul class="pagination">
-                <a class="page-link" href="#">
-                    Page précédente
-                </a>
-
-                <a class="page-link" href="#">1</a>
-                <a class="page-link" href="#">2</a>
-                <a class="page-link" href="#">3</a>
-
-                <a class="page-link" href="#">
-                    Page suivante
-                </a>
-            </ul>
-        </nav> -->
     </div>
 </div>
 

@@ -21,27 +21,17 @@ if ( isset( $_GET['id'] ) && !empty( $_GET['id'] ) ) {
                     <!-- contenu de l'article -->
                     <div id="post-content"></div>
 
-                    <div class="row d-flex mt-5 mb-3">
-                        <div class="col-lg-6 col-md-6">
-                            <button class="btn btn-link">Commentaires</button>
-                        </div>
+                    <div class="d-flex justify-content-start py-2">
+                        <div class="d-flex align-items-center">
+                            <span class="mr-2">Partager l'article:</span>
 
-                        <div class="col-lg-6 col-md-6 mt-2 mt-md-0 mt-lg-0 align-items-end">
-                            <span class="mr-2">Partager:</span>
-
-                            <a class="btn btn-link">
+                            <a id="facebook-share" class="btn btn-link mr-2" href="#" target="_blank">
                                 <li class="fa fa-facebook text-white"></li>
                             </a>
-
-                            <a class="btn btn-link">
-                                <li class="fa fa-google-plus text-white"></li>
-                            </a>
-
-                            <a class="btn btn-link">
+                            <a id="twitter-share" class="btn btn-link mr-2" href="#" target="_blank">
                                 <li class="fa fa-twitter text-white"></li>
                             </a>
-
-                            <a class="btn btn-link">
+                            <a id="linkedin-share" class="btn btn-link" href="#" target="_blank">
                                 <li class="fa fa-linkedin text-white"></li>
                             </a>
                         </div>
@@ -49,7 +39,13 @@ if ( isset( $_GET['id'] ) && !empty( $_GET['id'] ) ) {
                 </div>
 
                 <div class="my-5 p-3 border border-dark rounded">
-                    <h4 class="pb-5">BLOC</h4>
+                    <h4 class="mb-3">Articles similaires</h4>
+
+                    <!-- liste des articles similaires -->
+                    <div id="similar-posts" class="row row-cols-1 row-cols-lg-3 row-cols-md-2"></div>
+
+                    <!-- bouton voir plus d'articles similaires-->
+                    <div id="similar-posts-more" class="d-flex align-items-center mt-3"></div>
                 </div>
             </div>
 
@@ -58,25 +54,32 @@ if ( isset( $_GET['id'] ) && !empty( $_GET['id'] ) ) {
                     <!-- onglets de navigation -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#recent-posts" role="tab" aria-selected="true">+ récents</a>
+                            <a class="nav-link active" data-toggle="tab" href="#most-recent" role="tab" aria-selected="true">+ Récents</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#most-read" role="tab" aria-selected="false">+ lus</a>
+                            <a class="nav-link" data-toggle="tab" href="#most-viewed" role="tab" aria-selected="false">+ Lus</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#most-shared" role="tab" aria-selected="false">+ partagés</a>
+                            <a class="nav-link" data-toggle="tab" href="#most-shared" role="tab" aria-selected="false">+ Partagés</a>
                         </li>
                     </ul>
     
                     <div class="tab-content">
                         <!-- articles les plus récents -->
-                        <div class="tab-pane show active mt-3" id="recent-posts" role="tabpanel"></div>
+                        <div class="tab-pane show active mt-3" id="most-recent" role="tabpanel"></div>
     
                         <!-- articles les plus lus -->
-                        <div class="tab-pane mt-3" id="most-read" role="tabpanel"></div>
+                        <div class="tab-pane mt-3" id="most-viewed" role="tabpanel"></div>
 
                         <!-- articles les plus partagés -->
                         <div class="tab-pane mt-3" id="most-shared" role="tabpanel"></div>
+                    </div>
+
+                    <div class="d-flex align-items-center mt-2">
+                        <button class="btn d-flex align-items-center">
+                            <i class="fa fa-plus fa-2x"></i>
+                            <a href="rubrique.php?id=tout" class="ml-2">d'articles</a>
+                        </button>
                     </div>
                 </div>
 

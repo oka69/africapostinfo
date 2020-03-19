@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr-FR">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- librairie bootstrap -->
+        <!-- librairie css -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-        <!-- feuille de style personnalisé -->
-        <link rel="stylesheet" href="assets/css/style.css">
+        <!-- feuille de style personnalisée -->
+        <link rel="stylesheet" href="public/assets/css/style.css">
 
         <!-- librairie fontawesome -->
         <script src="https://use.fontawesome.com/5d5817c157.js"></script>
@@ -49,7 +49,7 @@
             <div class="container-fluid">
                 <div id="banner" class="row d-none d-lg-flex d-md-none justify-content-between align-items-center flex-fill">
                     <div class="col-4">
-                        <img src="assets/img/logo.jpg" class="img-fluid" alt="Logo AfricaPost">
+                        <img src="public/assets/img/logo.jpg" class="img-fluid" alt="Logo AfricaPost">
                     </div>
 
                     <div class="col-6">
@@ -58,7 +58,7 @@
                     
                     <div class="col-2 text-center">
                         <a href="carte.php">
-                            <img src="assets/img/carte_afrique.png" 
+                            <img src="public/assets/img/carte_afrique.png" 
                                 class="img-fluid p-3" alt="Pays d'Afrique" title="Carte d'Afrique">
                         </a>
                     </div>
@@ -67,7 +67,7 @@
                 <nav class="navbar navbar-expand-lg">
                     <!-- block d'entête pour mobile -->
                     <div class="row align-items-center justify-content-between navbar-toggler flex-fill">
-                        <img src="assets/img/logo_mini.jpg" class="img-fluid" alt="Logo AfricaPost">
+                        <img src="public/assets/img/logo_mini.jpg" class="img-fluid" alt="Logo AfricaPost">
 
                         <!-- bouton burger -->
                         <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
@@ -77,32 +77,32 @@
 
                     <!-- menu de navigation -->
                     <div class="collapse navbar-collapse" id="navbar">
-                        <ul class="navbar-nav">
-                            <li class="nav-item active text-uppercase">
-                                <a class="nav-link" href="/">Accueil <span class="sr-only">(current)</span></a>
+                        <ul class="navbar-nav text-uppercase">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">Accueil</a>
                             </li>
-                            <li class="nav-item text-uppercase">
+                            <li class="nav-item">
                                 <a class="nav-link" href="rubrique.php?id=politique">Politique</a>
                             </li>
-                            <li class="nav-item text-uppercase">
+                            <li class="nav-item">
                                 <a class="nav-link" href="rubrique.php?id=afrique">Afrique</a>
                             </li>
-                            <li class="nav-item text-uppercase">
+                            <li class="nav-item">
                                 <a class="nav-link" href="rubrique.php?id=monde">Monde</a>
                             </li>
-                            <li class="nav-item text-uppercase">
+                            <li class="nav-item">
                                 <a class="nav-link" href="rubrique.php?id=business">Business</a>
                             </li>
-                            <li class="nav-item text-uppercase">
+                            <li class="nav-item">
                                 <a class="nav-link" href="rubrique.php?id=sport">Sport</a>
                             </li>
-                            <li class="nav-item text-uppercase">
+                            <li class="nav-item">
                                 <a class="nav-link" href="rubrique.php?id=culture">Culture</a>
                             </li>
-                            <li class="nav-item text-uppercase">
+                            <li class="nav-item">
                                 <a class="nav-link" href="rubrique.php?id=technologie">Technologie</a>
                             </li>
-                            <li class="nav-item text-uppercase">
+                            <li class="nav-item">
                                 <a class="nav-link" href="#">AfriqueTV</a>
                             </li>
                         </ul>
