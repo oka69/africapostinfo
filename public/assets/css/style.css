@@ -83,4 +83,16 @@ footer {
   padding-top: 100px;
 }
 
+@media only screen and (max-width: 768px) {
+  #lightbox-image {
+    width: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  #lightbox div {
+    padding: 1em !important;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */

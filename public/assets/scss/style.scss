@@ -111,3 +111,16 @@ footer {
     padding-top: 100px;
 }
 
+#lightbox-image {
+    @media only screen and (max-width: 768px) {
+        width: 100% !important;
+    }
+}
+
+#lightbox {
+    div {
+        @media only screen and (max-width: 425px) {
+            padding: 1em !important;
+        }
+    }
+}

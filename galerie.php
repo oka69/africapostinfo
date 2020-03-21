@@ -77,7 +77,7 @@ if ( isset( $_GET['id'] ) && !empty( $_GET['id'] ) ) {
     <div id="lightbox">
         <div class="d-flex flex-column p-5">
             <li class="fa fa-times fa-3x p-2 text-white ml-auto" title="Fermer" style="cursor: pointer"></li>
-            <img id="lightbox-image" class="img-fluid w-75 mx-auto ">
+            <img id="lightbox-image" class="img-fluid w-75 mx-auto">
         </div>
     </div>
 
