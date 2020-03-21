@@ -8,7 +8,7 @@
         <!-- librairie css -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-        <!-- feuille de style personnalisée -->
+        <!-- feuille de style personnel -->
         <link rel="stylesheet" href="public/assets/css/style.css">
 
         <!-- librairie fontawesome -->
@@ -17,6 +17,9 @@
         <title>AFRICAPOST</title>
     </head>
     <body>
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v6.0&appId=357129561785723"></script>
+
         <!-- barre d'entête -->
         <div id="top-bar" class="py-2">
             <div class="container-fluid d-flex align-items-center">
@@ -33,13 +36,13 @@
                     <div class="input-group pl-0 pl-md-3 pl-lg-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <i class="fa fa-search"></i>
+                                <li id="search-button" class="fa fa-search" style="cursor:pointer"></li>
                             </div>
                         </div>
-                        <input type="search" class="form-control" id="search" placeholder="Rechercher">
+                        <input type="search" class="form-control" id="search" placeholder="Rechercher un article">
                     </div>
 
-                    <li class="fa fa-user fa-2x pl-3"></li>
+                    <!-- <li class="fa fa-user fa-2x pl-3"></li> -->
                 </div>
             </div>
         </div>

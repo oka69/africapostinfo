@@ -17,13 +17,17 @@ $counter = new Counter();
 
 //parse $_POST requests
 if ( isset( $_POST['update_views'] ) ) {
-	$counter->update_most_viewed( json_decode( $_POST['update_views'] ) );
+	$counter->update_count( json_decode( $_POST['update_views'] ), "views" );
 } elseif ( isset( $_POST['update_shares'] ) ) {
-	$counter->update_most_shared( json_decode( $_POST['update_shares'] ) );
+	$counter->update_count( json_decode( $_POST['update_shares'] ), "shares" );
 } elseif ( isset( $_POST['get_most_viewed'] ) ) {
-	$data = $counter->get_most_viewed( $_POST['get_most_viewed'] );
+	$data = $counter->get_posts( (int)$_POST['get_most_viewed'], "views" );
 } elseif ( isset( $_POST['get_most_shared'] ) ) {
-	$data = $counter->get_most_shared( $_POST['get_most_shared'] );
+	$data = $counter->get_posts( (int)$_POST['get_most_viewed'], "shares" );
+} elseif ( isset( $_POST['get_views_count'] ) ) {
+	$data = $counter->get_count( (int)$_POST['get_views_count'], "views" );
+} elseif ( isset( $_POST['get_shares_count'] ) ) {
+	$data = $counter->get_count( (int)$_POST['get_shares_count'], "shares" );
 }
 
 //send response in json format

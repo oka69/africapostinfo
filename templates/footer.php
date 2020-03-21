@@ -67,7 +67,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <script src="public/vendor/wpapi.min.js"></script>
 
-    <!-- script personnalisé -->
+    <!-- scripts personnels -->
+    <script src="public/assets/js/global.js"></script>
     <script src="public/assets/js/blog.js"></script>
     <script src="public/assets/js/gallery.js"></script>
     <script src="public/assets/js/counter.js"></script>

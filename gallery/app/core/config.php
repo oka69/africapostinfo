@@ -29,13 +29,18 @@
 */
 
 //define root directory
-define("ROOT", "/africapostinfo/gallery/");
+define("ROOT", "/gallery/");
 
 //define application configuration
 define("APP_ENV", "development");
 
 //define database configuration
-define("DB_HOST", "localhost");
+/* define("DB_HOST", "localhost");
 define("DB_USERNAME", "root");
 define("DB_PASSWORD", "eliseekn");
-define("DB_NAME", "gallery");
+define("DB_NAME", "gallery"); */
+
+define("DB_HOST", "185.98.131.109");
+define("DB_USERNAME", "afric1337230");
+define("DB_PASSWORD", "jjo52tujlp");
+define("DB_NAME", "afric1337230_1bw8s0");

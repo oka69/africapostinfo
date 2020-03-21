@@ -5,10 +5,15 @@ database.php
 */
 
 //define database connection constants
-define('DB_HOST', 'localhost');
-define('DB_USERNAME', 'root'); //change this to your database infos
-define('DB_PASSWORD', 'eliseekn'); //change this to your database infos
-define('DB_NAME', 'gallery'); //if you change this, change alse in db.sql
+define("DB_HOST", "185.98.131.109");
+define("DB_USERNAME", "afric1337230");
+define("DB_PASSWORD", "jjo52tujlp");
+define("DB_NAME", "afric1337230_1bw8s0");
+
+/* define("DB_HOST", "localhost");
+define("DB_USERNAME", "root");
+define("DB_PASSWORD", "eliseekn");
+define("DB_NAME", "gallery"); */
 
 //define database class used to connect and execute queries on it
 class Database {

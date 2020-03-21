@@ -13,8 +13,10 @@ class Counter {
 		$this->db = new Database();
 	}
 
-	private function fetch_posts( string $query, string $count ): array {
+	//get posts by shares or views
+	public function get_posts( int $limit, string $count ): array {
 		$posts = array();
+		$query = "SELECT * FROM posts ORDER BY $count DESC LIMIT $limit";
 
 		if ( $this->db->connected ) {
 			$result = $this->db->fetch_assoc( $query, true );
@@ -22,7 +24,8 @@ class Counter {
 			foreach ( $result as $post ) {
 				$count = (int)$post[$count];
 
-				if ($count > 4 ) {
+				//retrieves posts with more than 4 views or shares
+				if ( $count > 4 ) {
 					$posts[] = array (
 						'post_id' => $post['post_id'],
 						'title' => $post['title'],
@@ -35,7 +38,21 @@ class Counter {
 		return $posts;
 	}
 
-	private function update_post( array $post, string $count) {
+	//get posts shares or views count
+	public function get_count( int $post_id, string $count ): array {
+		$post = array();
+		$query = "SELECT * FROM posts WHERE post_id='$post_id'";
+
+		if ( $this->db->connected ) {
+			$result = $this->db->fetch_assoc( $query );
+			$post[] = array( "$count" => $result[$count] );
+		}
+
+		return $post;
+	}
+
+	//increment views or shares count
+	public function update_count( array $post, string $count) {
 		$post_id = $post[0];
 		$post_title = $post[1];
 		$post_image = $post[2];
@@ -52,40 +69,8 @@ class Counter {
 					('$post_id', '$post_title', '$post_image')";
 			}
 
-			$result = $this->db->execute_query( $query );
+			$this->db->execute_query( $query );
 		}
-	}
-	
-	//retrieves posts list by views
-	public function get_most_viewed( int $limit = 0 ): array {
-		if ($limit === 0) {
-			$query = "SELECT * FROM posts ORDER BY views DESC";
-		} else {
-			$query = "SELECT * FROM posts ORDER BY views DESC LIMIT $limit";
-		}
-
-		return $this->fetch_posts( $query, "views" );
-	}
-
-	//update post view counter
-	public function update_most_viewed( array $post ) {
-		$this->update_post( $post, "views" );
-	}
-
-	//retrieves posts list by share
-	public function get_most_shared( int $limit = 0 ) {
-		if ($limit === 0) {
-			$query = "SELECT * FROM posts ORDER BY shares DESC";
-		} else {
-			$query = "SELECT * FROM posts ORDER BY shares DESC LIMIT $limit";
-		}
-
-		return $this->fetch_posts( $query, "shares" );
-	}
-
-	//update post share counter
-	public function update_most_shared( array $post ) {
-		$this->update_post( $post, "shares" );
 	}
 }
 

@@ -39,6 +39,18 @@ if ( isset( $_GET['id'] ) && !empty( $_GET['id'] ) ) {
                 </div>
 
                 <div class="my-5 p-3 border border-dark rounded">
+                    <h4 class="mb-3">Commentaires</h4>
+
+                    <div 
+                        class="fb-comments" 
+                        data-href="<?= "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" 
+                        data-width="100%" 
+                        data-numposts="20"
+                        data-order-by="time">
+                    </div>
+                </div>
+
+                <div class="my-5 p-3 border border-dark rounded">
                     <h4 class="mb-3">Articles similaires</h4>
 
                     <!-- liste des articles similaires -->
@@ -84,7 +96,7 @@ if ( isset( $_GET['id'] ) && !empty( $_GET['id'] ) ) {
                 </div>
 
                 <div class="mt-5 p-3 border border-dark rounded">
-                    <h2>Post TV</h2>
+                    <h4>Post TV</h4>
                     <iframe class="img-fluid w-100" src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0"></iframe>
                 </div>
 

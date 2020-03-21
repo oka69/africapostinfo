@@ -1,6 +1,3 @@
-//définition des variables globales
-var endPoint = "/africapostinfo/gallery/collections/";
-
 //afficher le lightbox
 function showLightbox(e) {
     //attribution du lien vers l'image
@@ -15,7 +12,7 @@ function showLightbox(e) {
 $(function() {
     //récupération des dernières collections images
     if ( document.getElementById( "collections-list" ) ) {
-        $.post(endPoint + "5", function( data ) {
+        $.post(galleryEndPoint + "5", function( data ) {
             let html = '';
             let collections = data.collections;
             let thumbnails = data.thumbnails;
@@ -48,7 +45,7 @@ $(function() {
     if ( document.getElementById( "images-list" ) ) {
         if ( catId === "tout" ) {
             //récupération du nombre total de pages par articles
-            $.post("/gallery/collections", function( data ) {
+            $.post(galleryEndPoint, function( data ) {
                 let html = `
                     <h2 class="py-3">Galerie d'images</h2>
                     <div class="row row-cols-1 row-cols-lg-2 row-cols-md-2">
@@ -75,7 +72,7 @@ $(function() {
         } else {
             catId = Number(catId);
 
-            $.post(endPoint + "images/" + catId, function( data ) {
+            $.post(galleryEndPoint + "images/" + catId, function( data ) {
                 let html = `
                     <h2 class="py-3">${ data.name }</h2>
                     <div class="row row-cols-1 row-cols-lg-2 row-cols-md-2">

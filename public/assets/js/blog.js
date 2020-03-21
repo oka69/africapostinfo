@@ -1,7 +1,18 @@
-//connexion au REST API de WordPress avec la librairie javascript node-wpapi
-var wp = new WPAPI({ endpoint: 'http://localhost/africapostinfo/blog/wp-json' }); //https://africapost.info/bd
+//mise en forme de la date
+function formatDate( utcDate ) {
+    let months = [
+        "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet",
+        "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    ];
+
+    let newDate = new Date(utcDate);
+    return newDate.getUTCDate() + " " + months[newDate.getUTCMonth()] + " " + newDate.getUTCFullYear();
+}
 
 $(function() {
+    //connexion au REST API de WordPress avec la librairie javascript node-wpapi
+    let wp = new WPAPI({ endpoint: blogEndPoint });
+
     //récupération du dernier article mis en avant (sticky post)
     if ( document.getElementById( "sticky-post" ) ) {
         wp.posts().sticky( true ).status( 'publish' ).order( 'desc' ).orderby( 'id' ).get().then(function( data ) {
@@ -11,6 +22,8 @@ $(function() {
                 <h1 class="my-3">
                     <a href="article.php?id=${ data[0].id }">${ data[0].title.rendered }</a>
                 </h1>
+
+                <p class="text-muted">Publié le ${ formatDate( data[0].date ) }</p>
 
                 <a href="article.php?id=${ data[0].id }">
                     <img src="${ data[0].featured_image_url }" class="img-fluid" alt="">
@@ -52,7 +65,7 @@ $(function() {
 
     //récupération des articles les plus lus
     if ( document.getElementById( "most-viewed" ) ) {
-        $.post( "/africapostinfo/counter/router.php/", {get_most_viewed: 5} )
+        $.post( counterEndPoint, {get_most_viewed: 5} )
             .done(function( data ) {
                 let html = '';
 
@@ -78,7 +91,7 @@ $(function() {
 
     //récupération des articles les plus partagés
     if ( document.getElementById( "most-shared" ) ) {
-        $.post( "/africapostinfo/counter/router.php/", {get_most_shared: 5} )
+        $.post( counterEndPoint, {get_most_shared: 5} )
             .done(function( data ) {
                 let html = '';
 
@@ -299,6 +312,7 @@ $(function() {
         wp.posts().id( postId ).get().then(function( data ) {
             $("#post-content").html(`
                 <h1 class="my-3">${ data.title.rendered }</h1>
+                <p class="text-muted">Publié le ${ formatDate( data.date ) }</p>
                 <img src="${ data.featured_image_url }" class="img-fluid my-3" alt="">
                 <p>${ data.content.rendered }</p>
             `);
@@ -422,6 +436,11 @@ $(function() {
                                     <div class="p-3 mb-5 border border-dark rounded">
                                         <a href="article.php?id=${ element.id }">
                                             <h1 class="my-3">${ element.title.rendered }</h1>
+                                        </a>
+
+                                        <p class="text-muted">Publié le ${ formatDate( element.date ) }</p>
+
+                                        <a href="article.php?id=${ element.id }">
                                             <img src="${ element.featured_image_url }" class="img-fluid my-3" alt="">
                                         </a>
 
@@ -512,6 +531,11 @@ $(function() {
                                         <div class="p-3 mb-5 border border-dark rounded">
                                             <a href="article.php?id=${ element.id }">
                                                 <h1 class="my-3">${ element.title.rendered }</h1>
+                                            </a>
+
+                                            <p class="text-muted">Publié le ${ formatDate( element.date ) }</p>
+
+                                            <a href="article.php?id=${ element.id }">
                                                 <img src="${ element.featured_image_url }" class="img-fluid my-3" alt="">
                                             </a>
                                             
@@ -532,4 +556,120 @@ $(function() {
             })
         }
     }
+
+    //récupération de tous les articles selon la requête de la recherche
+    if ( document.getElementById( "posts-list-search" ) ) {
+        wp.posts().status( 'publish' ).search( query ).perPage( 5 ).page( pageId ).order( 'desc' ).orderby( 'id' ).headers()
+            .then(function( data ) {
+                let totalPages = data["x-wp-totalpages"];
+
+                //barre de pagination
+                let pagination = `
+                    <nav class="mt-5">
+                        <ul class="pagination">
+                `;
+
+                //bouton page précédente 
+                if ( pageId > 1 ) {
+                    pagination += `
+                        <li class="page-item">    
+                            <a class="page-link" href="search.php?q=${ query }&page=${ pageId - 1 }">Page précédente</a>
+                        </li>
+                    `;
+                }
+    
+                //bouton numérotés
+                if ( totalPages > 1 ) {
+                    for (let i = 1; i <= totalPages; i++) {
+                        if (i === pageId) {
+                            pagination += `
+                                <li class="page-item active">    
+                                    <a class="page-link" href="search.php?q=${ query }&page=${ i }">
+                                    ${ i }
+                                    <span class="sr-only">(current)</span>
+                                    </a>
+                                </li>
+                                `;
+                        } else {
+                            pagination += `
+                                <li class="page-item">    
+                                    <a class="page-link" href="search.php?q=${ query }&page=${ i }">${ i }</a>
+                                </li>
+                                `;
+                        }
+                    }
+                }
+    
+                //bouton page suivante
+                if ( pageId < totalPages ) {
+                    pagination += `
+                        <li class="page-item">    
+                            <a class="page-link" href="search.php?q=${ query }&page=${ pageId + 1 }">Page suivante</a>
+                        </li>
+                    `;
+                }
+
+                pagination += `
+                        </ul>
+                    </nav>
+                `;
+
+                return pagination;
+            }) //récupération des articles
+            .then(function( pagination ) {
+                wp.posts().status( 'publish' ).search( query ).perPage( 5 ).page( pageId ).order( 'desc' ).orderby( 'id' ).get()
+                    .then(function( data ) {
+                        let html = `
+                            <h4 class="mb-5">Résultats de la recherche pour "${query}"</h4>
+                        `;
+
+                        if (data.length > 0) {
+                            data.forEach(element => {
+                                html += `
+                                    <div class="p-3 mb-5 border border-dark rounded">
+                                        <a href="article.php?id=${ element.id }">
+                                            <h1 class="my-3">${ element.title.rendered }</h1>
+                                        </a>
+
+                                        <p class="text-muted">Publié le ${ formatDate( element.date ) }</p>
+
+                                        <a href="article.php?id=${ element.id }">
+                                            <img src="${ element.featured_image_url }" class="img-fluid my-3" alt="">
+                                        </a>
+    
+                                        <p>${ element.excerpt.rendered }</p>
+            
+                                        <a href="article.php?id=${ element.id }" class="btn btn-link my-2">
+                                            Lire la suite
+                                        </a>
+                                    </div>
+                                `;
+                            });
+                        } else {
+                            html += `<p class="lead">Aucun résultat trouvé</p>`;
+                        }
+
+                        html += pagination;
+
+                        $("#posts-list-search").html( html );
+                })
+            })
+    }
+
+    //formulaire de recherche
+    //https://stackoverflow.com/questions/979662/how-to-detect-pressing-enter-on-keyboard-using-jquery
+    $("#search").keypress(function(event) {
+        if (event.key === "Enter") {
+            $("#search-button").click();
+        }
+    });
+
+    //bouton de l'icône rechercher
+    $("#search-button").click(function() {
+        let search_query = $("#search").val();
+
+        if ( search_query !== "" ) {
+            window.location.href = "/search.php?q=" + search_query;
+        }
+    });
 });
